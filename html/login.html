@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="background-left"></div>
+    <div class="background-right">
+        <div class="container">
+            <form id="loginForm" method="post" action="/user/login">
+                <h2>Seja bem vindo de volta!!</h2>
+                <div class="form-group">
+                    <label for="username">Usuário:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Entrar</button>
+            </form>
+            <a href="#" id="openModal">Não possui uma conta ainda? Cadastre-se aqui</a>
+        </div>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="createUserForm">
+                <h2 id="user">Criar Usuário</h2>
+                <form id="createUserForm" method="post" action="/user/create-user">
+                    <div class="form-group">
+                        <label for="newUsername">Nome de Usuário:</label>
+                        <input type="text" id="newUsername" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">Senha:</label>
+                        <input type="password" id="newPassword" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <button type="submit" id="createUserBtn">Criar Usuário</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/scriptLogin.js"></script>
+</body>
+
+</html>

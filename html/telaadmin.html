@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="controle"> <h2>CONTROLE FINANCEIRO PESSOAL</h2> </div>
+       
+        <div class="buttons">
+            <button id="cadastroUsuarios" onclick="openModal()">Cadastro de Usuários</button>
+        </div>
+    </div>
+    <div id="transactionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeTransactionModal()">&times;</span>
+            <h2 id="ultimas">Últimas Transações</h2>
+            <ul id="lastTransactions">
+            </ul>
+        </div>
+    </div>
+    <div class="container2"> 
+        <h2 id="title2">CONTROLE DE FINANÇAS</h2>
+        <div class="container1"> 
+            <div class="summary-section">
+                <div class="summary-box">
+                    <h3 id="sumario">Entrada</h3>
+                    <p>R$ <span id="entryTotal">0.00</span></p>
+                </div>
+                <div class="summary-box">
+                    <h3 id="sumario"> Saída</h3> 
+                    <p>R$ <span id="exitTotal">0.00</span></p>
+                </div>
+                <div class="summary-box">
+                    <h3 id="sumario">Total</h3>
+                    <p>R$ <span id="total">0.00</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="entry-section">
+            <h3 id="transacao">Nova transação</h3>
+            <div class="entry-form">
+                <input type="text" id="description" placeholder="Descrição" required>
+                <input type="text" id="value" placeholder="Valor" required>
+                <input type="text" id="date" placeholder="Data (DD/MM/YYYY)" required>
+                <select id="type">
+                    <option id="opcoes" value="entry">Entrada</option>
+                    <option id="opcoes" value="exit">Saída</option>
+                </select>
+                <button id="select" onclick="submitTransaction()">Incluir</button>
+            </div>
+
+        <div id="userModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2 id="lista">Lista de Usuários</h2>
+                <ul id="userList">
+            
+                </ul>
+            </div>
+        </div>
+  
+
+        <div class="container2">
+            <table id="finanças" class="transaction-table">
+                <thead>
+                    <tr>
+                        <th id="finanças">Descrição</th>
+                        <th id="finanças">Valor</th>
+                        <th id="finanças">Tipo</th>
+                        <th id="finanças">Data</th>
+                        <th id="finanças">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="transactionBody">
+                </tbody>
+            </table>
+        </div>
+
+<div class="container2">
+    <h2 id="title2">CADASTRO DE CONTAS BANCÁRIAS</h2>
+    <div class="entry-section">
+        <h3 id="transacao">Nova Conta Bancária</h3>
+        <div class="entry-form">
+            <input type="text" id="accountName" placeholder="Nome da Conta" required><br>
+            <input type="text" id="bank" placeholder="Banco" required><br>
+            <input type="text" id="accountNumber" placeholder="Número da Conta" required><br>
+            <input type="text" id="balance" placeholder="Saldo" required><br>
+        </div>
+        <div class="button-container">
+            <button id="cadastrarConta" onclick="submitAccount()">Cadastrar Conta</button>
+        </div>
+    </div>
+</div>
+
+        <div class="container3">
+            <table id="table"class="account-table">
+                <thead id="table">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Banco</th>
+                        <th>Número</th>
+                        <th>Saldo</th>
+                    </tr>
+                </thead>
+                <tbody id="accountBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="/scriptAdmin.js"></script>
+</body>
+</html>
