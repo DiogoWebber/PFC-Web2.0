@@ -43,16 +43,28 @@ function createUserForm(req, res) {
 async function createUser(req, res) {
     const { username, password, email, status } = req.body;
     try {
+        // Verifica se o usuário já existe pelo nome de usuário
         const userExists = await User.findOne({ username });
         if (userExists) {
             return sendErrorResponse(res, 400, 'Nome de usuário indisponível');
         }
 
+        // Hash da senha antes de salvar no banco de dados
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ username, password: hashedPassword, email, level: 'OFF', status });
+
+        // Gera um novo ID único usando uuidv4
+        const userId = uuidv4();
+
+        // Cria um novo usuário com dados fornecidos, incluindo o ID gerado
+        const newUser = new User({ _id: userId, username, password: hashedPassword, email, level: 'OFF', status });
+
+        // Salva o novo usuário no banco de dados
         await newUser.save();
+
+        // Responde com sucesso
         sendSuccessResponse(res, 'Usuário criado com sucesso!');
     } catch (error) {
+        // Captura e trata qualquer erro que ocorra durante o processo
         console.error('Erro ao criar usuário:', error);
         sendErrorResponse(res, 500, 'Erro no servidor');
     }
@@ -73,11 +85,6 @@ async function updateUserLevel(req, res) {
     const { level } = req.body;
 
     try {
-        // Verifique se userId é um ObjectId válido (opcional, dependendo do seu schema)
-        if (!mongoose.Types.ObjectId.isValid(userId)) {
-            return res.status(400).json({ error: 'ID do usuário inválido' });
-        }
-
         const user = await User.findByIdAndUpdate(userId, { level }, { new: true });
 
         if (!user) {
@@ -91,6 +98,7 @@ async function updateUserLevel(req, res) {
         res.status(500).json({ error: 'Erro no servidor ao atualizar nível do usuário' });
     }
 }
+
 
 module.exports = {
     login,
