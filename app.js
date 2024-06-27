@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require('path');
+const cors = require('cors')
 const userRoutes = require('./routes/userRoutes'); // Certifique-se de definir seus próprios routes se existirem
 const transactionRoutes = require('./routes/transactionRoutes');
 const accountsRoutes = require('./routes/accountsRoutes');
@@ -32,6 +33,11 @@ app.use(session({
 app.use(express.static(path.join(__dirname, '/')));
 app.use(bodyParser.json());
 
+app.use(cors({
+    origin: true, 
+    credentials: true
+}));
+
 // Middleware de registro para verificar as solicitações para arquivos estáticos
 app.use((req, res, next) => {
     console.log('Recebida solicitação para:', req.url);
@@ -55,7 +61,7 @@ app.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, 'html', 'telaadmin.html'));
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Servidor em execução na porta http://localhost:${PORT}`);
 });
