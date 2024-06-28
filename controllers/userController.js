@@ -1,8 +1,10 @@
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const User = require('../models/User');
-const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
-const mongoose = require('mongoose');
+
+const SECRET_KEY = process.env.SECRET_KEY || 'your_secret_key';
 
 function sendSuccessResponse(res, data) {
     res.status(200).json({ success: true, data });
@@ -10,6 +12,11 @@ function sendSuccessResponse(res, data) {
 
 function sendErrorResponse(res, statusCode, message) {
     res.status(statusCode).json({ success: false, error: message });
+}
+
+function generateToken(userId) {
+    console.log(SECRET_KEY);
+    return jwt.sign({ userId }, SECRET_KEY, { expiresIn: '1h' });
 }
 
 async function login(req, res) {
@@ -29,8 +36,8 @@ async function login(req, res) {
             return sendErrorResponse(res, 403, 'Você não possui permissão de acesso.');
         }
 
-        req.session.usuario = user;
-        sendSuccessResponse(res, 'Usuário autenticado com sucesso!');
+        const token = generateToken(user._id);
+        sendSuccessResponse(res, { token, message: 'Usuário autenticado com sucesso!' });
     } catch (error) {
         sendErrorResponse(res, 500, 'Erro no servidor');
     }
@@ -61,15 +68,12 @@ async function createUser(req, res) {
         // Salva o novo usuário no banco de dados
         await newUser.save();
 
-        // Responde com sucesso
         sendSuccessResponse(res, 'Usuário criado com sucesso!');
     } catch (error) {
-        // Captura e trata qualquer erro que ocorra durante o processo
         console.error('Erro ao criar usuário:', error);
         sendErrorResponse(res, 500, 'Erro no servidor');
     }
 }
-
 
 async function getAllUsers(req, res) {
     try {
@@ -98,7 +102,6 @@ async function updateUserLevel(req, res) {
         res.status(500).json({ error: 'Erro no servidor ao atualizar nível do usuário' });
     }
 }
-
 
 module.exports = {
     login,

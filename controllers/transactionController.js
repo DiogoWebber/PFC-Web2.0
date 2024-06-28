@@ -12,9 +12,9 @@ async function getTransactions(req, res) {
 }
 
 async function addTransaction(req, res) {
-    const { description, value, type, date } = req.body;
+    const { description, value, type, date, categoria } = req.body;
     try {
-        const newTransaction = new Transaction({ description, value, type, date });
+        const newTransaction = new Transaction({ description, value, type, date, categoria });
         await newTransaction.save();
         res.status(201).json({ success: true, transaction: newTransaction });
     } catch (err) {

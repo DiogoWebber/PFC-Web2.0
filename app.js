@@ -6,6 +6,9 @@ const cors = require('cors')
 const userRoutes = require('./routes/userRoutes'); // Certifique-se de definir seus próprios routes se existirem
 const transactionRoutes = require('./routes/transactionRoutes');
 const accountsRoutes = require('./routes/accountsRoutes');
+const categoriasRoutes = require('./routes/categoriasRoutes');
+const authRoutes = require('./routes/authRoutes');
+
 const mongoose = require('mongoose');
 
 const app = express();
@@ -30,6 +33,10 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
+
+require('dotenv').config();
+
+
 app.use(express.static(path.join(__dirname, '/')));
 app.use(bodyParser.json());
 
@@ -53,13 +60,10 @@ app.use('/accounts', accountsRoutes);
 // Rotas para usuários (se existirem)
 app.use('/user', userRoutes);
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'html', 'login.html'));
-});
+app.use('/categorias', categoriasRoutes)
 
-app.get('/admin', (req, res) => {
-    res.sendFile(path.join(__dirname, 'html', 'telaadmin.html'));
-});
+app.use('/auth', authRoutes)
+
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
