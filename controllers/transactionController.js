@@ -1,4 +1,3 @@
-// controllers/transactionController.js
 const Transaction = require('../models/Transaction');
 
 async function getTransactions(req, res) {
@@ -12,9 +11,9 @@ async function getTransactions(req, res) {
 }
 
 async function addTransaction(req, res) {
-    const { description, value, type, date, categoria } = req.body;
+    const { description, value, type, date, categoria, dueDate } = req.body; // Adicionando dueDate ao desestruturar req.body
     try {
-        const newTransaction = new Transaction({ description, value, type, date, categoria });
+        const newTransaction = new Transaction({ description, value, type, date, categoria, dueDate }); // Incluindo dueDate na criação de nova transação
         await newTransaction.save();
         res.status(201).json({ success: true, transaction: newTransaction });
     } catch (err) {
@@ -39,10 +38,10 @@ async function deleteTransaction(req, res) {
 
 async function updateTransaction(req, res) {
     const transactionId = req.params.id;
-    const { description, value, type, date } = req.body;
+    const { description, value, type, date, dueDate } = req.body; // Adicionando dueDate ao desestruturar req.body
     try {
         const updatedTransaction = await Transaction.findByIdAndUpdate(transactionId,
-            { description, value, type, date },
+            { description, value, type, date, dueDate }, // Incluindo dueDate na atualização
             { new: true }
         );
         if (!updatedTransaction) {

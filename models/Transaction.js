@@ -20,6 +20,10 @@ const transactionSchema = new mongoose.Schema({
     categoria: {
         type: String,
         required: true
+    },
+    dueDate: {
+        type: Date,
+        required: true
     }
 });
 

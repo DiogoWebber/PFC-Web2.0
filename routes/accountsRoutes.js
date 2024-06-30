@@ -6,7 +6,7 @@ const accountsController = require('../controllers/accountsController');
 router.get('/', accountsController.getAccounts);
 
 // Exemplo de rota POST
-router.post('/', accountsController.addAccounts); // Verifique se addAccounts está definido corretamente
+router.post('/', accountsController.addAccounts); 
 
 // Exemplo de rota DELETE
 router.delete('/:id', accountsController.deleteAccount);
