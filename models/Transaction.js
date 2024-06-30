@@ -25,6 +25,11 @@ const transactionSchema = new mongoose.Schema({
         type: Date,
         required: true
     }
+    ,
+    accountName: {
+        type: String,
+        required: true
+    }
 });
 
 module.exports = mongoose.model('Transaction', transactionSchema);
